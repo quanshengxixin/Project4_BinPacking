@@ -2,7 +2,7 @@
 #include"Bin.h"
 #include"Item.h"
 #include"Greedy.h"
-// I made a small change!
+
 void OnlineFirstFit(ListP listPtr, ItemP itemPtr){
 
 }
