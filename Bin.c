@@ -4,14 +4,6 @@
 #include"Item.h"
 #include"Greedy.h"
 
-// Bin ADT
-struct Bin{
-	int capacity;
-	int currentSize;
-	BinP nextBin;
-	ItemP firstItem;
-};
-
 ListP createBinList(){
 	ListP listPtr = malloc(sizeof(struct BinList));
 	listPtr->numBins = 0;
@@ -19,7 +11,7 @@ ListP createBinList(){
 	return listPtr;
 }
 
-void addBinToList(ListP listPtr, int capacity){
+BinP addBinToList(ListP listPtr, int capacity){
 	BinP binPtr = malloc(sizeof(struct Bin));
 	binPtr->capacity = capacity;
 	binPtr->currentSize = 0;
@@ -29,7 +21,7 @@ void addBinToList(ListP listPtr, int capacity){
 	if (listPtr->numBins == 0){ // if first bin
 		listPtr->head = binPtr;
 		listPtr->numBins++;
-		return;
+		return binPtr;
 	}
 	
 	// else not the first bin
@@ -41,8 +33,14 @@ void addBinToList(ListP listPtr, int capacity){
 	tmp->nextBin = binPtr;
 	listPtr->numBins++;
 
+	return binPtr;
+}
+
+void printBins(ListP listPtr){
+
 	return;
 }
+
 
 ListP freeBinList(ListP listPtr){ // FUNCTION NOT COMPLETE!
 

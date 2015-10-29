@@ -3,6 +3,8 @@
 #include"Bin.h"
 #include"Item.h"
 
+FILE *fpBins, *fpBinItems;
+
 /**
 * Online First Fit algorithm
 *

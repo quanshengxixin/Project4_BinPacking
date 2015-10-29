@@ -11,6 +11,14 @@ struct BinList{
 	BinP head;
 };
 
+// Bin ADT
+struct Bin{
+	int capacity;
+	int currentSize;
+	BinP nextBin;
+	ItemP firstItem;
+};
+
 /**
 * Creates a bin list ADT
 *
@@ -22,8 +30,16 @@ ListP createBinList();
 * Creaes a new Bin ADT and adds it to the BinList
 *
 * @params: pointer to the BinList, capacity of new Bin
+* return: pointer to the new Bin
 */
-void addBinToList(ListP, int);
+BinP addBinToList(ListP, int);
+
+/**
+* Prints all Bins and Items in each Bin
+*
+* @params: pointer to the BinList
+*/
+void printBins(ListP);
 
 /**
 * Frees the memory used by the BinList including all Bins and Items
