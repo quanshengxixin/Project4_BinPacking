@@ -33,11 +33,11 @@ int main(void){
 			item = createItem(currentItem);
 			//OnlineFirstFit(binList, item);
 			bin = OnlineNextFit(binList, item, bin);
+			//OnlineBestFit(binList, item);
 		}
 	}
-
 	printBins(binList);
-	printf("Bins used: %d\n", binList->numBins);
+	printf("\nBins used: %d\n", binList->numBins);
 
 	getchar();
 	return 0;

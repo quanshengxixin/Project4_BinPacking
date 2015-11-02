@@ -1,3 +1,5 @@
+#define _CRT_SECURE_NO_DEPRECATE
+
 #include<stdio.h>
 #include<stdlib.h>
 #include"Bin.h"
@@ -43,14 +45,19 @@ void printBins(ListP listPtr){
 	printf("\n");
 	for (i = 0; i < listPtr->numBins; i++){ // iterate through bins
 		item = currentBin->firstItem;
-		printf("Bin %d: ", currentBin->capacity);
+		printf("Bin %d", currentBin->capacity);
+		if (currentBin->capacity == currentBin->currentSize)
+			printf(" (F): "); // Bin is full
+		else printf(" (N): "); // Bin is NOT full
+
 		while (item != NULL){ // iterate through items in each bin
 			printf("%d ", item->size);
 			item = item->nextItem;
 		}
-		currentBin = currentBin->nextBin;
+		currentBin = currentBin->nextBin; // next Bin
 		printf("\n");
 	}
+	printf("Bins used: %d\n\n", listPtr->numBins);
 	return;
 }
 
