@@ -8,6 +8,7 @@ ListP createBinList(){
 	ListP listPtr = malloc(sizeof(struct BinList));
 	listPtr->numBins = 0;
 	listPtr->head = NULL;
+	listPtr->lastBinChecked = 0;
 	return listPtr;
 }
 
@@ -21,6 +22,7 @@ BinP addBinToList(ListP listPtr, int capacity){
 	if (listPtr->numBins == 0){ // if first bin
 		listPtr->head = binPtr;
 		listPtr->numBins++;
+		binPtr->binIndex = listPtr->numBins-1;
 		return binPtr;
 	}
 	
@@ -32,15 +34,28 @@ BinP addBinToList(ListP listPtr, int capacity){
 
 	tmp->nextBin = binPtr;
 	listPtr->numBins++;
+	binPtr->binIndex = listPtr->numBins-1;
 
 	return binPtr;
 }
 
 void printBins(ListP listPtr){
-
+	int i;
+	BinP currentBin = listPtr->head;
+	ItemP item;
+	printf("\n");
+	for (i = 0; i < listPtr->numBins; i++){ // iterate through bins
+		item = currentBin->firstItem;
+		printf("Bin %d: ", currentBin->capacity);
+		while (item != NULL){ // iterate through items in each bin
+			printf("%d ", item->size);
+			item = item->nextItem;
+		}
+		currentBin = currentBin->nextBin;
+		printf("\n");
+	}
 	return;
 }
-
 
 ListP freeBinList(ListP listPtr){ // FUNCTION NOT COMPLETE!
 

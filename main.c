@@ -24,16 +24,20 @@ int main(void){
 	bin = addBinToList(binList, currentBin);
 
 	// start packing!
-	//for (i = 0; i < numRuns; i++){
+	for (i = 0; i < numRuns; i++){
 		fscanf(fpBinItems, "%d", &itemsInRun); // get number of items in current run
 		for (j = 0; j < itemsInRun; j++){
 			fscanf(fpBinItems, "%d", &currentItem);
 
 			// create item and place in Bin
 			item = createItem(currentItem);
-			OnlineFirstFit(binList, item);
+			//OnlineFirstFit(binList, item);
+			OnlineNextFit(binList, item, binList->lastBinChecked);
 		}
-	//}
+	}
+
+	printBins(binList);
+	printf("Bins used: %d\n", binList->numBins);
 
 	getchar();
 	return 0;

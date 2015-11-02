@@ -15,9 +15,9 @@ void OnlineFirstFit(ListP, ItemP);
 /**
 * Online Next Fit algorithm
 *
-* @params: pointer to the BinList ADT, pointer to the Item ADT
+* @params: pointer to the BinList ADT, pointer to the Item ADT, index of the last Bin checked
 */
-void OnlineNextFit(ListP, ItemP);
+void OnlineNextFit(ListP, ItemP, int);
 
 /**
 * Online Best Fit algorithm

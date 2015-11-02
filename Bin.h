@@ -8,6 +8,7 @@ typedef struct Bin *BinP;
 // BinList ADT
 struct BinList{
 	int numBins;
+	int lastBinChecked; // index of last Bin checked
 	BinP head;
 };
 
@@ -15,6 +16,7 @@ struct BinList{
 struct Bin{
 	int capacity;
 	int currentSize;
+	int binIndex; // used for getting location of the Bin in the BinList
 	BinP nextBin;
 	ItemP firstItem;
 };
