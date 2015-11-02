@@ -49,7 +49,7 @@ void OnlineFirstFit(ListP listPtr, ItemP itemPtr){
 	return;
 }
 
-void OnlineNextFit(ListP listPtr, ItemP itemPtr, int index){
+void OnlineNextFit(ListP listPtr, ItemP itemPtr){
 	int i;
 	BinP currentBin = listPtr->head;
 	ItemP q; // use for traversing list of Items in each Bin
@@ -92,13 +92,15 @@ void OnlineNextFit(ListP listPtr, ItemP itemPtr, int index){
 	if (itemPtr->size <= currentBin->capacity){
 		currentBin->currentSize += itemPtr->size;
 		currentBin->firstItem = itemPtr;
+		listPtr->lastBinChecked = currentBin->binIndex;
 		}
 
 	else{ // if Item is still too big, report and throw away!
 		fprintf(stderr, "Item of size %d has been thrown away\n", itemPtr->size);
 		freeItem(itemPtr);
 	}
-	listPtr->lastBinChecked = currentBin->binIndex;
+
+	// IF > 1 ARE ITEMS ARE THROWN AWAY ONE AFTER THE OTHER, A BIN IS SKIPPED!!!
 	return;
 }
 
