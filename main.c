@@ -35,8 +35,8 @@ int main(void){
 			bin = OnlineNextFit(binList, item, bin);
 			//OnlineBestFit(binList, item);
 		}
+		printBins(binList);
 	}
-	printBins(binList);
 
 	getchar();
 	return 0;
