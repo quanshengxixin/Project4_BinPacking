@@ -37,7 +37,6 @@ int main(void){
 		}
 	}
 	printBins(binList);
-	printf("\nBins used: %d\n", binList->numBins);
 
 	getchar();
 	return 0;

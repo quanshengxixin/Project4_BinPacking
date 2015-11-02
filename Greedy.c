@@ -19,8 +19,9 @@ void placeItemInBin(BinP, ItemP);
 * If Item still does not fit, throws Item away by freeing it.
 *
 * @params: BinList pointer, pointer to the current Bin, pointer to the Item
+* return: pointer to the newly created Bin
 */
-void itemTooLarge(ListP, BinP, ItemP);
+BinP itemTooLarge(ListP, BinP, ItemP);
 
 void OnlineFirstFit(ListP listPtr, ItemP itemPtr){
 	int i;
@@ -34,7 +35,6 @@ void OnlineFirstFit(ListP listPtr, ItemP itemPtr){
 		}
 		currentBin = currentBin->nextBin; // if item does NOT fit in currentBin, go to nextBin
 	}
-
 	// Item could not fit in any Bin; create new Bin
 	itemTooLarge(listPtr, currentBin, itemPtr);
 	return;
@@ -53,7 +53,7 @@ BinP OnlineNextFit(ListP listPtr, ItemP itemPtr, BinP binPtr){
 		currentBin = currentBin->nextBin; // if item does NOT fit in currentBin, go to nextBin
 	}
 	// Item could not fit in any Bin; create new Bin
-	itemTooLarge(listPtr, currentBin, itemPtr);
+	currentBin = itemTooLarge(listPtr, currentBin, itemPtr);
 	return currentBin;
 }
 
@@ -110,7 +110,7 @@ void placeItemInBin(BinP currentBin, ItemP itemPtr){
 	return;
 }
 
-void itemTooLarge(ListP listPtr, BinP currentBin, ItemP itemPtr){
+BinP itemTooLarge(ListP listPtr, BinP currentBin, ItemP itemPtr){
 	// Item could not fit in any Bin; create new Bin
 	int newBinSize;
 	fscanf(fpBins, "%d", &newBinSize);
@@ -126,5 +126,5 @@ void itemTooLarge(ListP listPtr, BinP currentBin, ItemP itemPtr){
 		fprintf(stderr, "Item of size %d has been thrown away\n", itemPtr->size);
 		freeItem(itemPtr); // throw away Item
 	}
-	return;
+	return currentBin;
 }
