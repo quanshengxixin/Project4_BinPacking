@@ -49,19 +49,13 @@ void OnlineFirstFit(ListP listPtr, ItemP itemPtr){
 	return;
 }
 
-void OnlineNextFit(ListP listPtr, ItemP itemPtr){
+BinP OnlineNextFit(ListP listPtr, ItemP itemPtr, BinP binPtr){
 	int i;
-	BinP currentBin = listPtr->head;
+	BinP currentBin = binPtr;
 	ItemP q; // use for traversing list of Items in each Bin
 
-	// get to last Bin checked
-	for (i = 0; i < listPtr->lastBinChecked; i++){
-		if (currentBin->nextBin == NULL) break;
-		currentBin = currentBin->nextBin;
-	}
-
 	// find the next Bin that the Item will fit into
-	for (i = 0; i < listPtr->numBins - listPtr->lastBinChecked; i++){
+	while (currentBin != NULL){
 		if (itemPtr->size <= currentBin->capacity - currentBin->currentSize){ // if item fits in Bin
 			// update currentSize in Bin and place Item in Bin
 			if (currentBin->firstItem == NULL){	// if first Item in Bin
@@ -76,8 +70,7 @@ void OnlineNextFit(ListP listPtr, ItemP itemPtr){
 				}
 				q->nextItem = itemPtr;
 			}
-			listPtr->lastBinChecked = currentBin->binIndex;
-			return; // item has been placed in Bin
+			return currentBin; // item has been placed in Bin
 		}
 		if (currentBin->nextBin == NULL) break;
 		currentBin = currentBin->nextBin; // if item does NOT fit in currentBin, go to nextBin
@@ -92,16 +85,19 @@ void OnlineNextFit(ListP listPtr, ItemP itemPtr){
 	if (itemPtr->size <= currentBin->capacity){
 		currentBin->currentSize += itemPtr->size;
 		currentBin->firstItem = itemPtr;
-		listPtr->lastBinChecked = currentBin->binIndex;
+		return currentBin;
 		}
 
 	else{ // if Item is still too big, report and throw away!
 		fprintf(stderr, "Item of size %d has been thrown away\n", itemPtr->size);
 		freeItem(itemPtr);
-	}
 
-	// IF > 1 ARE ITEMS ARE THROWN AWAY ONE AFTER THE OTHER, A BIN IS SKIPPED!!!
-	return;
+		// find a Bin that is NOT empty so next fit algorithm will work
+		currentBin = listPtr->head;
+		while (currentBin->nextBin->currentSize != 0)
+			currentBin = currentBin->nextBin;
+		return currentBin;
+	}
 }
 
 void OnlineBestFit(ListP listPtr, ItemP itemPtr){

@@ -32,7 +32,7 @@ int main(void){
 			// create item and place in Bin
 			item = createItem(currentItem);
 			//OnlineFirstFit(binList, item);
-			OnlineNextFit(binList, item);
+			bin = OnlineNextFit(binList, item, bin);
 		}
 	}
 

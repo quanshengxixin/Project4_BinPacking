@@ -8,7 +8,6 @@ ListP createBinList(){
 	ListP listPtr = malloc(sizeof(struct BinList));
 	listPtr->numBins = 0;
 	listPtr->head = NULL;
-	listPtr->lastBinChecked = 0;
 	return listPtr;
 }
 
@@ -22,7 +21,6 @@ BinP addBinToList(ListP listPtr, int capacity){
 	if (listPtr->numBins == 0){ // if first bin
 		listPtr->head = binPtr;
 		listPtr->numBins++;
-		binPtr->binIndex = listPtr->numBins-1;
 		return binPtr;
 	}
 	
@@ -34,7 +32,6 @@ BinP addBinToList(ListP listPtr, int capacity){
 
 	tmp->nextBin = binPtr;
 	listPtr->numBins++;
-	binPtr->binIndex = listPtr->numBins-1;
 
 	return binPtr;
 }
