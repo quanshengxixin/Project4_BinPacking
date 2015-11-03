@@ -61,7 +61,7 @@ void printBins(ListP listPtr){
 	return;
 }
 
-ListP freeBinList(ListP listPtr){ // FUNCTION NOT COMPLETE!
+ListP freeBinList(ListP listPtr){
 	int i;
 	BinP currentBin = listPtr->head, tmpBin;
 	ItemP item, tmpItem; // use tmp for freeing

@@ -40,6 +40,8 @@ int main(void){
 
 	binList = freeBinList(binList);
 
+	fclose(fpBinItems);
+	fclose(fpBins);
 	getchar();
 	return 0;
 }
