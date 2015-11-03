@@ -20,7 +20,7 @@ int main(void){
 	int i, j, numRuns, itemsInRun, currentBin, currentItem;
 	int *itemsInFile; // use for holding items from file
 	ItemP item1, item2, item3, item4, item5;
-	BinP bin, bin2;
+	BinP bin;
 
 	// read bins.txt and binItems.txt
 	fpBins = fopen("bins.txt", "r");
@@ -47,7 +47,7 @@ int main(void){
 		// perform all 5 algorithms
 		rewind(fpBins); // ensure every algorithm starts with the same Bin
 		fscanf(fpBins, "%d", &currentBin);
-		bin = addBinToList(binList1, currentBin);
+		addBinToList(binList1, currentBin);
 		for (j = 0; j < itemsInRun; j++){
 			currentItem = itemsInFile[j];
 			item1 = createItem(currentItem);
@@ -56,16 +56,16 @@ int main(void){
 
 		rewind(fpBins);
 		fscanf(fpBins, "%d", &currentBin);
-		bin2 = addBinToList(binList2, currentBin);
+		bin = addBinToList(binList2, currentBin);
 		for (j = 0; j < itemsInRun; j++){
 			currentItem = itemsInFile[j];
 			item2 = createItem(currentItem);
-			bin2 = OnlineNextFit(binList2, item2, bin2);
+			bin = OnlineNextFit(binList2, item2, bin);
 		}
 
 		rewind(fpBins);
 		fscanf(fpBins, "%d", &currentBin);
-		bin = addBinToList(binList3, currentBin);
+		addBinToList(binList3, currentBin);
 		for (j = 0; j < itemsInRun; j++){
 			currentItem = itemsInFile[j];
 			item3 = createItem(currentItem);
@@ -76,7 +76,7 @@ int main(void){
 	// reset all binLists
 	binList1 = resetBinList(binList1);
 	binList2 = resetBinList(binList2);
-	bin2 = binList2->head;
+	bin = binList2->head;
 	binList3 = resetBinList(binList3);
 	free(itemsInFile);
 	}
