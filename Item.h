@@ -1,3 +1,11 @@
+/***************************************************************
+Gedd Johnson
+Generation.h
+Project 4:  Bin Packing
+
+Public functionality of the Item ADT. Note that an Item is 
+similar to the common Node data structure.
+***************************************************************/
 #ifndef _Item_h
 #define _Item_h
 

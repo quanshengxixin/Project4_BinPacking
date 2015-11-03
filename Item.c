@@ -1,3 +1,10 @@
+/***************************************************************
+Gedd Johnson
+Generation.h
+Project 4:  Bin Packing
+
+Private implementation of the Item ADT.
+***************************************************************/
 #include<stdio.h>
 #include<stdlib.h>
 #include"Bin.h"

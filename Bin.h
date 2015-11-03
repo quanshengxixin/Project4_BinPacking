@@ -1,3 +1,10 @@
+/***************************************************************
+Gedd Johnson
+Generation.h
+Project 4:  Bin Packing
+
+Public functionality of the BinList and Bin ADTs.
+***************************************************************/
 #ifndef _Bin_h
 #define _Bin_h
 #include"Item.h"

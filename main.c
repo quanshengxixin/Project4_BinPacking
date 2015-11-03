@@ -1,3 +1,12 @@
+/******************************************************************
+Gedd Johnson
+Generation.h
+Project 4:  Bin Packing
+
+Main implementation of the Bin Packing problem using the following
+5 algorithms:  Online First Fit, Online Next Fit, Online Best Fit,
+Offline First Fit, and Offline Best Fit.
+******************************************************************/
 #define _CRT_SECURE_NO_DEPRECATE
 
 #include<stdio.h>

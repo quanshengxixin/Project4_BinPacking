@@ -1,3 +1,10 @@
+/***************************************************************
+Gedd Johnson
+Generation.h
+Project 4:  Bin Packing
+
+Private implementation of the Greedy algorithms.
+***************************************************************/
 #define _CRT_SECURE_NO_DEPRECATE
 
 #include<stdlib.h>
@@ -49,9 +56,15 @@ BinP itemTooLarge(ListP, BinP, ItemP);
 /**
 * Mergesort function to sort the items in descending order. Used for offline algorithms.
 *
-*
+* @params: pointer to the array, total number of elements in array
 */
 void mergeSort(int *originalArray, int total);
+
+/*
+* Helper for mergeSort. Merges array back together in order
+*
+* @params: new sorted array, newArray1, total1, new array 2, total2
+*/
 void mergeBack(int *sortedArray, int *array1, int total1, int *array2, int total2);
 
 void OnlineFirstFit(ListP listPtr, int* allItems, int itemsInRun){
