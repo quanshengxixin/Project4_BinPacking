@@ -7,6 +7,28 @@
 #include"Greedy.h"
 
 /**
+* First Fit algorithm
+*
+* @params: pointer to the BinList ADT, pointer to the Item ADT
+*/
+void FirstFit(ListP, ItemP);
+
+/**
+* Next Fit algorithm
+*
+* @params: pointer to the BinList ADT, pointer to the Item ADT, pointer to the current Bin
+* return: pointer to the last Bin an item was placed in
+*/
+BinP NextFit(ListP, ItemP, BinP);
+
+/**
+* Best Fit algorithm
+*
+* @params: pointer to the BinList ADT, pointer to the Item ADT
+*/
+void BestFit(ListP, ItemP);
+
+/**
 * Places an Item in the appropriate Bin and updates 
 * currentSize of Bin. Will not place if Item does not fit any Bins
 *
@@ -23,11 +45,95 @@ void placeItemInBin(BinP, ItemP);
 */
 BinP itemTooLarge(ListP, BinP, ItemP);
 
+
+/**
+* Mergesort function to sort the items in descending order. Used for offline algorithms.
+*
+*
+*/
 void mergeSort(int *originalArray, int total);
 void mergeBack(int *sortedArray, int *array1, int total1, int *array2, int total2);
 
+void OnlineFirstFit(ListP listPtr, int* allItems, int itemsInRun){
+	int j, currentBin, currentItem;
+	ItemP item;
+	rewind(fpBins); // ensure every algorithm starts with the same Bin
+	fscanf(fpBins, "%d", &currentBin);
+	addBinToList(listPtr, currentBin);
+	for (j = 0; j < itemsInRun; j++){
+		currentItem = allItems[j];
+		item = createItem(currentItem);
+		FirstFit(listPtr, item);
+	}
+}
 
-void OnlineFirstFit(ListP listPtr, ItemP itemPtr){
+void OnlineNextFit(ListP listPtr, int* allItems, int itemsInRun){
+	int j, currentBin, currentItem;
+	BinP bin;
+	ItemP item;
+	rewind(fpBins);
+	fscanf(fpBins, "%d", &currentBin);
+	bin = addBinToList(listPtr, currentBin);
+	for (j = 0; j < itemsInRun; j++){
+		currentItem = allItems[j];
+		item = createItem(currentItem);
+		bin = NextFit(listPtr, item, bin);
+	}
+}
+
+void OnlineBestFit(ListP listPtr, int* allItems, int itemsInRun){
+	int j, currentBin, currentItem;
+	ItemP item;
+	rewind(fpBins); // ensure every algorithm starts with the same Bin
+	fscanf(fpBins, "%d", &currentBin);
+	addBinToList(listPtr, currentBin);
+	for (j = 0; j < itemsInRun; j++){
+		currentItem = allItems[j];
+		item = createItem(currentItem);
+		BestFit(listPtr, item);
+	}
+}
+
+void OfflineFirstFit(ListP listPtr, int *allItems, int itemsInRun){
+	int j, currentItem, currentBin;
+	ItemP item;
+
+	// sort allItems
+	mergeSort(allItems, itemsInRun);
+
+	// create items and pack
+	rewind(fpBins); // ensure every algorithm starts with the same Bin
+	fscanf(fpBins, "%d", &currentBin);
+	addBinToList(listPtr, currentBin);
+	for (j = 0; j < itemsInRun; j++){
+		currentItem = allItems[j];
+		item = createItem(currentItem);
+		FirstFit(listPtr, item);
+	}
+	return;
+}
+
+void OfflineBestFit(ListP listPtr, int *allItems, int itemsInRun){
+	int j;
+	int currentItem, currentBin;
+	ItemP item;
+
+	// sort allItems
+	mergeSort(allItems, itemsInRun);
+
+	// create items and pack
+	rewind(fpBins); // ensure every algorithm starts with the same Bin
+	fscanf(fpBins, "%d", &currentBin);
+	addBinToList(listPtr, currentBin);
+	for (j = 0; j < itemsInRun; j++){
+		currentItem = allItems[j];
+		item = createItem(currentItem);
+		BestFit(listPtr, item);
+	}
+	return;
+}
+
+void FirstFit(ListP listPtr, ItemP itemPtr){
 	int i;
 	BinP currentBin = listPtr->head;
 
@@ -44,7 +150,7 @@ void OnlineFirstFit(ListP listPtr, ItemP itemPtr){
 	return;
 }
 
-BinP OnlineNextFit(ListP listPtr, ItemP itemPtr, BinP binPtr){
+BinP NextFit(ListP listPtr, ItemP itemPtr, BinP binPtr){
 	BinP currentBin = binPtr;
 
 	// find the next Bin that the Item will fit into
@@ -61,7 +167,7 @@ BinP OnlineNextFit(ListP listPtr, ItemP itemPtr, BinP binPtr){
 	return currentBin;
 }
 
-void OnlineBestFit(ListP listPtr, ItemP itemPtr){
+void BestFit(ListP listPtr, ItemP itemPtr){
 	int i;
 	int best = 101, current; // init best and current, used for checking space left in a Bin; best is now higher than any Bin size
 	BinP currentBin = listPtr->head, bestBin = currentBin; // init bestBin
@@ -85,46 +191,6 @@ void OnlineBestFit(ListP listPtr, ItemP itemPtr){
 
 	// Item could not fit in any Bin; create new Bin
 	itemTooLarge(listPtr, currentBin, itemPtr);
-	return;
-}
-
-void OfflineFirstFit(ListP listPtr, int *allItems, int itemsInRun){
-	int j;
-	int currentItem, currentBin;
-	ItemP item;
-
-	// sort allItems
-	mergeSort(allItems, itemsInRun);
-
-	// create items and pack
-	rewind(fpBins); // ensure every algorithm starts with the same Bin
-	fscanf(fpBins, "%d", &currentBin);
-	addBinToList(listPtr, currentBin);
-	for (j = 0; j < itemsInRun; j++){
-		currentItem = allItems[j];
-		item = createItem(currentItem);
-		OnlineBestFit(listPtr, item);
-	}
-	return;
-}
-
-void OfflineBestFit(ListP listPtr, int *allItems, int itemsInRun){
-	int j;
-	int currentItem, currentBin;
-	ItemP item;
-
-	// sort allItems
-	mergeSort(allItems, itemsInRun);
-
-	// create items and pack
-	rewind(fpBins); // ensure every algorithm starts with the same Bin
-	fscanf(fpBins, "%d", &currentBin);
-	addBinToList(listPtr, currentBin);
-	for (j = 0; j < itemsInRun; j++){
-		currentItem = allItems[j];
-		item = createItem(currentItem);
-		OnlineFirstFit(listPtr, item);
-	}
 	return;
 }
 
@@ -165,7 +231,6 @@ BinP itemTooLarge(ListP listPtr, BinP currentBin, ItemP itemPtr){
 }
 
 void mergeSort(int *originalArray, int total){
-
 	if (total <= 1) // array has been sorted
 		return;
 	int i; // counter 

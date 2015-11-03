@@ -5,27 +5,11 @@
 
 FILE *fpBins, *fpBinItems;
 
-/**
-* Online First Fit algorithm
-*
-* @params: pointer to the BinList ADT, pointer to the Item ADT
-*/
-void OnlineFirstFit(ListP, ItemP);
+void OnlineFirstFit(ListP, int*, int);
 
-/**
-* Online Next Fit algorithm
-*
-* @params: pointer to the BinList ADT, pointer to the Item ADT, pointer to the current Bin
-* return: pointer to the last Bin an item was placed in
-*/
-BinP OnlineNextFit(ListP, ItemP, BinP);
+void OnlineNextFit(ListP, int*, int);
 
-/**
-* Online Best Fit algorithm
-*
-* @params: pointer to the BinList ADT, pointer to the Item ADT
-*/
-void OnlineBestFit(ListP, ItemP);
+void OnlineBestFit(ListP, int*, int);
 
 /**
 * Offline First Fit algorithm
