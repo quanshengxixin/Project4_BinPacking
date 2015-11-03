@@ -38,6 +38,17 @@ BinP addBinToList(ListP listPtr, int capacity){
 	return binPtr;
 }
 
+ListP resetBinList(ListP listPtr){
+	int currentBin;
+	freeBinList(listPtr); // free all memory used by BinList
+	rewind(fpBins);
+	fscanf(fpBins, "%d", &currentBin); // get next Bin from file, don't go back to start of file???
+	listPtr = createBinList(); // create a new BinList and init with a Bin
+	addBinToList(listPtr, currentBin);
+	return listPtr;
+}
+
+
 void printBins(ListP listPtr){
 	int i;
 	BinP currentBin = listPtr->head;
@@ -45,11 +56,7 @@ void printBins(ListP listPtr){
 	printf("\n");
 	for (i = 0; i < listPtr->numBins; i++){ // iterate through bins
 		item = currentBin->firstItem;
-		printf("Bin %d", currentBin->capacity);
-		if (currentBin->capacity == currentBin->currentSize)
-			printf(" (F): "); // Bin is full
-		else printf(" (N): "); // Bin is NOT full
-
+		printf("Bin %d: ", currentBin->capacity);
 		while (item != NULL){ // iterate through items in each bin
 			printf("%d ", item->size);
 			item = item->nextItem;

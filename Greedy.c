@@ -124,7 +124,7 @@ BinP itemTooLarge(ListP listPtr, BinP currentBin, ItemP itemPtr){
 
 	else{ // if Item is still too big, report and throw away!
 		fprintf(stderr, "Item of size %d has been thrown away\n", itemPtr->size);
-		freeItem(itemPtr); // throw away Item
+		freeItem(itemPtr);
 	}
 	return currentBin;
 }

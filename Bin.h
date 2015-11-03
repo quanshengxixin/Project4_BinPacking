@@ -27,12 +27,21 @@ struct Bin{
 ListP createBinList();
 
 /**
-* Creaes a new Bin ADT and adds it to the BinList
+* Creates a new Bin ADT and adds it to the BinList
 *
 * @params: pointer to the BinList, capacity of new Bin
 * return: pointer to the new Bin
 */
 BinP addBinToList(ListP, int);
+
+/**
+* Resets the contents of a BinList after completing a run.
+* Will free all memory used by the BinList and init with new data.
+*
+* @params: pointer to the BinList
+* return: pointer to the BinList that was just reset
+*/
+ListP resetBinList(ListP);
 
 /**
 * Prints all Bins and Items in each Bin
