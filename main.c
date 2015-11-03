@@ -18,6 +18,7 @@ void printTables(ListP, ListP, ListP, ListP, ListP);
 
 int main(void){
 	int i, j, numRuns, itemsInRun, currentBin, currentItem;
+	int *itemsInFile; // use for holding items from file
 	ItemP item1, item2, item3, item4, item5;
 	BinP bin, bin2;
 
@@ -26,44 +27,58 @@ int main(void){
 	fpBinItems = fopen("binItems.txt", "r");
 	fscanf(fpBinItems, "%d", &numRuns);
 
-	// create a BinList structure for each algorithm and init by adding a Bin
+	// create a BinList structure for each algorithm
 	ListP binList1 = createBinList();
 	ListP binList2 = createBinList();
 	ListP binList3 = createBinList();
 	ListP binList4 = createBinList();
 	ListP binList5 = createBinList();
-	fscanf(fpBins, "%d", &currentBin);
-	bin = addBinToList(binList1, currentBin);
-	bin2 = addBinToList(binList2, currentBin);
-	bin = addBinToList(binList3, currentBin);
-	bin = addBinToList(binList4, currentBin);
-	bin = addBinToList(binList5, currentBin);
 
 	// start packing!
 	for (i = 0; i < numRuns; i++){
 		fscanf(fpBinItems, "%d", &itemsInRun); // get number of items in current run
+		itemsInFile = malloc(sizeof(int) * itemsInRun);
+		// get all items in current run to ensure that every algorithm is using the same items
 		for (j = 0; j < itemsInRun; j++){
 			fscanf(fpBinItems, "%d", &currentItem);
-			item1 = createItem(currentItem); // create an item for each of the 5 algorithms
-			item2 = createItem(currentItem);
-			item3 = createItem(currentItem);
-			item4 = createItem(currentItem);
-			item5 = createItem(currentItem);
+			itemsInFile[j] = currentItem;
+		}
 
-			// perform all 5 algorithms
+		// perform all 5 algorithms
+		rewind(fpBins); // ensure every algorithm starts with the same Bin
+		fscanf(fpBins, "%d", &currentBin);
+		bin = addBinToList(binList1, currentBin);
+		for (j = 0; j < itemsInRun; j++){
+			currentItem = itemsInFile[j];
+			item1 = createItem(currentItem);
 			OnlineFirstFit(binList1, item1);
+		}
 
+		rewind(fpBins);
+		fscanf(fpBins, "%d", &currentBin);
+		bin2 = addBinToList(binList2, currentBin);
+		for (j = 0; j < itemsInRun; j++){
+			currentItem = itemsInFile[j];
+			item2 = createItem(currentItem);
 			bin2 = OnlineNextFit(binList2, item2, bin2);
+		}
 
+		rewind(fpBins);
+		fscanf(fpBins, "%d", &currentBin);
+		bin = addBinToList(binList3, currentBin);
+		for (j = 0; j < itemsInRun; j++){
+			currentItem = itemsInFile[j];
+			item3 = createItem(currentItem);
 			OnlineBestFit(binList3, item3);
 		}
-		printTables(binList1, binList2, binList3, binList4, binList5);
+	printTables(binList1, binList2, binList3, binList4, binList5);
 		
-		// reset all binLists
-		binList1 = resetBinList(binList1);
-		binList2 = resetBinList(binList2);
-		bin2 = binList2->head;
-		binList3 = resetBinList(binList3);
+	// reset all binLists
+	binList1 = resetBinList(binList1);
+	binList2 = resetBinList(binList2);
+	bin2 = binList2->head;
+	binList3 = resetBinList(binList3);
+	free(itemsInFile);
 	}
 
 	// free all BinLists and close files

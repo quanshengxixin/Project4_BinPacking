@@ -39,12 +39,8 @@ BinP addBinToList(ListP listPtr, int capacity){
 }
 
 ListP resetBinList(ListP listPtr){
-	int currentBin;
 	freeBinList(listPtr); // free all memory used by BinList
-	rewind(fpBins);
-	fscanf(fpBins, "%d", &currentBin); // get next Bin from file, don't go back to start of file???
 	listPtr = createBinList(); // create a new BinList and init with a Bin
-	addBinToList(listPtr, currentBin);
 	return listPtr;
 }
 
