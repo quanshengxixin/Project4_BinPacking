@@ -38,6 +38,8 @@ int main(void){
 		printBins(binList);
 	}
 
+	binList = freeBinList(binList);
+
 	getchar();
 	return 0;
 }

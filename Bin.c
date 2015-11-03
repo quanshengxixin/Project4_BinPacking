@@ -62,7 +62,23 @@ void printBins(ListP listPtr){
 }
 
 ListP freeBinList(ListP listPtr){ // FUNCTION NOT COMPLETE!
+	int i;
+	BinP currentBin = listPtr->head, tmpBin;
+	ItemP item, tmpItem; // use tmp for freeing
 
+	for (i = 0; i < listPtr->numBins; i++){ // iterate through bins
+		item = currentBin->firstItem;
+
+		while (item != NULL){ // iterate through items in each bin
+			tmpItem = item;
+			item = item->nextItem;
+			freeItem(tmpItem);
+		}
+		tmpBin = currentBin;
+		currentBin = currentBin->nextBin; // next Bin
+		free(tmpBin);
+	}
+	free(listPtr);
 	listPtr = NULL;
 	return listPtr;
 }
