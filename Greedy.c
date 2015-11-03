@@ -23,6 +23,10 @@ void placeItemInBin(BinP, ItemP);
 */
 BinP itemTooLarge(ListP, BinP, ItemP);
 
+void mergeSort(int *originalArray, int total);
+void mergeBack(int *sortedArray, int *array1, int total1, int *array2, int total2);
+
+
 void OnlineFirstFit(ListP listPtr, ItemP itemPtr){
 	int i;
 	BinP currentBin = listPtr->head;
@@ -84,12 +88,44 @@ void OnlineBestFit(ListP listPtr, ItemP itemPtr){
 	return;
 }
 
-void OfflineFirstFit(ListP listPtr, ItemP itemPtr){
+void OfflineFirstFit(ListP listPtr, int *allItems, int itemsInRun){
+	int j;
+	int currentItem, currentBin;
+	ItemP item;
 
+	// sort allItems
+	mergeSort(allItems, itemsInRun);
+
+	// create items and pack
+	rewind(fpBins); // ensure every algorithm starts with the same Bin
+	fscanf(fpBins, "%d", &currentBin);
+	addBinToList(listPtr, currentBin);
+	for (j = 0; j < itemsInRun; j++){
+		currentItem = allItems[j];
+		item = createItem(currentItem);
+		OnlineBestFit(listPtr, item);
+	}
+	return;
 }
 
-void OfflineBestFit(ListP listPtr, ItemP itemPtr){
+void OfflineBestFit(ListP listPtr, int *allItems, int itemsInRun){
+	int j;
+	int currentItem, currentBin;
+	ItemP item;
 
+	// sort allItems
+	mergeSort(allItems, itemsInRun);
+
+	// create items and pack
+	rewind(fpBins); // ensure every algorithm starts with the same Bin
+	fscanf(fpBins, "%d", &currentBin);
+	addBinToList(listPtr, currentBin);
+	for (j = 0; j < itemsInRun; j++){
+		currentItem = allItems[j];
+		item = createItem(currentItem);
+		OnlineFirstFit(listPtr, item);
+	}
+	return;
 }
 
 void placeItemInBin(BinP currentBin, ItemP itemPtr){
@@ -121,10 +157,67 @@ BinP itemTooLarge(ListP listPtr, BinP currentBin, ItemP itemPtr){
 		currentBin->currentSize += itemPtr->size;
 		currentBin->firstItem = itemPtr;
 	}
-
 	else{ // if Item is still too big, report and throw away!
-		fprintf(stderr, "Item of size %d has been thrown away\n", itemPtr->size);
+		//fprintf(stderr, "Item of size %d has been thrown away\n", itemPtr->size);
 		freeItem(itemPtr);
 	}
 	return currentBin;
+}
+
+void mergeSort(int *originalArray, int total){
+
+	if (total <= 1) // array has been sorted
+		return;
+	int i; // counter 
+	int newTotal1 = total / 2; // get half of the elements
+	int newTotal2 = total - newTotal1;  // get the rest of the elements
+	int *newArray1 = malloc(sizeof(int) * newTotal1); // dynamically create new arrays to fit elements
+	int *newArray2 = malloc(sizeof(int) * newTotal2);
+	if (newArray1 == NULL || newArray2 == NULL){
+		fprintf(stderr, "ERROR -> Ran out of memory\n");
+		return;
+	}
+
+	// copy data from old array into new arrays
+	for (i = 0; i < newTotal1; i++)
+		newArray1[i] = originalArray[i];
+
+	for (i = 0; i < newTotal2; i++)
+		newArray2[i] = originalArray[i + newTotal1]; // need to add newTotal1 to get to the second half of old array
+
+	mergeSort(newArray1, newTotal1);
+	mergeSort(newArray2, newTotal2);
+	mergeBack(originalArray, newArray1, newTotal1, newArray2, newTotal2);
+	free(newArray1);
+	free(newArray2);
+	return;
+}
+
+void mergeBack(int *sortedArray, int *array1, int total1, int *array2, int total2){
+	int sortedIndex = 0; // corresponds to the final sorted array
+	int index1 = 0; // corresponds to newArray1
+	int index2 = 0; // corresponds to newArray2
+	while (index1 < total1 && index2 < total2){
+		if (array1[index1] >= array2[index2]){ // sort descending
+			sortedArray[sortedIndex] = array1[index1];
+			index1++;
+			sortedIndex++;
+		}
+		else{
+			sortedArray[sortedIndex] = array2[index2];
+			index2++;
+			sortedIndex++;
+		}
+	}
+	while (index1 < total1){ // is array1 empty?
+		sortedArray[sortedIndex] = array1[index1];
+		index1++;
+		sortedIndex++;
+	}
+	while (index2 < total2){ // is array2 empty?
+		sortedArray[sortedIndex] = array2[index2];
+		index2++;
+		sortedIndex++;
+	}
+	return;
 }

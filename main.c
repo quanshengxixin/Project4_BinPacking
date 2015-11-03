@@ -19,7 +19,7 @@ void printTables(ListP, ListP, ListP, ListP, ListP);
 int main(void){
 	int i, j, numRuns, itemsInRun, currentBin, currentItem;
 	int *itemsInFile; // use for holding items from file
-	ItemP item1, item2, item3, item4, item5;
+	ItemP item1, item2, item3;
 	BinP bin;
 
 	// read bins.txt and binItems.txt
@@ -71,6 +71,11 @@ int main(void){
 			item3 = createItem(currentItem);
 			OnlineBestFit(binList3, item3);
 		}
+
+	OfflineFirstFit(binList4, itemsInFile, itemsInRun);
+	OfflineBestFit(binList5, itemsInFile, itemsInRun);
+
+	printf("Run %d\n", i+1);
 	printTables(binList1, binList2, binList3, binList4, binList5);
 		
 	// reset all binLists
@@ -78,6 +83,8 @@ int main(void){
 	binList2 = resetBinList(binList2);
 	bin = binList2->head;
 	binList3 = resetBinList(binList3);
+	binList4 = resetBinList(binList4);
+	binList5 = resetBinList(binList5);
 	free(itemsInFile);
 	}
 
@@ -101,15 +108,20 @@ void printTables(ListP binList1, ListP binList2, ListP binList3, ListP binList4,
 	printf("  Next Fit:         %d\n", binList2->numBins);
 	printf("  Best Fit:         %d\n", binList3->numBins);
 	printf("Offline\n");
-	printf("  First Fit:      \n");
-	printf("  Best Fit:       \n");
+	printf("  First Fit:        %d\n", binList4->numBins);
+	printf("  Best Fit:         %d\n", binList5->numBins);
 	printf("\n");
-
+	/*
 	printf("Results of Online First Fit");
 	printBins(binList1);
 	printf("Results of Online Next Fit");
 	printBins(binList2);
 	printf("Results of Online Best Fit");
 	printBins(binList3);
+	printf("Results of Offline First Fit");
+	printBins(binList4);
+	printf("Results of Offline Best Fit");
+	printBins(binList5);
+	*/
 	printf("----------------------------------------------\n");
 }

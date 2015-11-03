@@ -30,15 +30,15 @@ void OnlineBestFit(ListP, ItemP);
 /**
 * Offline First Fit algorithm
 *
-* @params: pointer to the BinList ADT, pointer to the Item ADT
+* @params: pointer to the BinList ADT, pointer to a dynamic array holding all items, size of dynamic array
 */
-void OfflineFirstFit(ListP, ItemP);
+void OfflineFirstFit(ListP, int*, int);
 
 /**
 * Offline Best Fit algorithm
 *
-* @params: pointer to the BinList ADT, pointer to the Item ADT
+* @params: pointer to the BinList ADT, pointer to a dynamic array holding all items, size of dynamic array
 */
-void OfflineBestFit(ListP, ItemP);
+void OfflineBestFit(ListP, int*, int);
 
 #endif
