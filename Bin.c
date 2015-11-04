@@ -5,8 +5,6 @@ Project 4:  Bin Packing
 
 Private implementation of the BinList and Bin ADTs.
 ***************************************************************/
-#define _CRT_SECURE_NO_DEPRECATE
-
 #include<stdio.h>
 #include<stdlib.h>
 #include"Bin.h"

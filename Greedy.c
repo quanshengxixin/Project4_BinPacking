@@ -58,14 +58,14 @@ BinP itemTooLarge(ListP, BinP, ItemP);
 *
 * @params: pointer to the array, total number of elements in array
 */
-void mergeSort(int *originalArray, int total);
+void mergeSort(int*, int);
 
 /*
 * Helper for mergeSort. Merges array back together in order
 *
 * @params: new sorted array, newArray1, total1, new array 2, total2
 */
-void mergeBack(int *sortedArray, int *array1, int total1, int *array2, int total2);
+void mergeBack(int*, int*, int , int*, int);
 
 void OnlineFirstFit(ListP listPtr, int* allItems, int itemsInRun){
 	int j, currentBin, currentItem;

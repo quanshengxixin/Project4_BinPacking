@@ -15,8 +15,6 @@ Offline First Fit, and Offline Best Fit.
 #include"Item.h"
 #include"Greedy.h"
 
-#define MAXBINS 1000
-
 /**
 * Prints the tables showing the number of Bins used by each of the 5 algorithms
 * and prints the contents of each Bin following each table.
