@@ -9,8 +9,8 @@ Public functionality of the BinList and Bin ADTs.
 #define _Bin_h
 #include"Item.h"
 
-typedef struct BinList *ListP;
 typedef struct Bin *BinP;
+typedef struct BinList *ListP;
 
 // BinList ADT
 struct BinList{
@@ -25,6 +25,7 @@ struct Bin{
 	BinP nextBin;
 	ItemP firstItem;
 };
+
 
 /**
 * Creates a bin list ADT
